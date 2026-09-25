@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#FFFBF4;color:#1C1917;font-family:Figtree,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:#E4341C;text-decoration:none}
+  a:hover{color:#1C1917}
+  ::selection{background:#FFB703;color:#1C1917}
+  input,textarea,select,button{font-family:inherit;font-size:inherit;color:inherit;border-radius:0}
+  @keyframes v4run{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @keyframes v4bar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  @keyframes v4cue{0%,100%{transform:translateY(0);opacity:.4}50%{transform:translateY(8px);opacity:1}}
+  @media (max-width:860px){.v4-cue{display:none!important}}
+  ::placeholder{color:#6B6058;opacity:1}
+  .v4-ph-light ::placeholder{color:rgba(255,251,244,.86);opacity:1}
+</style>
+</helmet>
+
+<div style="background:#FFFBF4;color:#1C1917">
+
+  <!-- ============ HOME ============ -->
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+  <main>
+
+    <section onMouseEnter="{{ heroPause }}" onMouseLeave="{{ heroPlay }}" aria-roledescription="carousel" aria-label="Home Queen highlights" style="position:relative;min-height:100vh;overflow:hidden;background:#1C1917">
+
+      <header style="position:absolute;top:0;left:0;right:0;z-index:20;border-bottom:1px solid {{ uiLine }};transition:border-color .6s ease">
+        <div style="max-width:1360px;margin:0 auto;padding:16px 32px;display:flex;align-items:center;gap:32px;flex-wrap:wrap">
+          <a href="#" onClick="{{ goHome }}" style="display:flex;align-items:center;flex-shrink:0;background:#FFFBF4;padding:8px 12px">
+            <img src="uploads/Home-Queen-Logo-R-1.webp" alt="Home Queen" style="height:46px;width:auto;display:block" />
+          </a>
+          <nav style="display:flex;gap:4px;margin-left:auto;align-items:center;flex-wrap:wrap;font-weight:700;font-size:14px;letter-spacing:.01em">
+            <a href="#" onClick="{{ goShop }}" style="color:{{ uiFg }};padding:10px 15px;white-space:nowrap;transition:color .6s ease" style-hover="background:rgba(255,255,255,.2)">Shop</a>
+            <a href="#" onClick="{{ goAbout }}" style="color:{{ uiFg }};padding:10px 15px;white-space:nowrap;transition:color .6s ease" style-hover="background:rgba(255,255,255,.2)">Our Story</a>
+            <a href="#" onClick="{{ goRecipes }}" style="color:{{ uiFg }};padding:10px 15px;white-space:nowrap;transition:color .6s ease" style-hover="background:rgba(255,255,255,.2)">Recipes</a>
+            <a href="#" onClick="{{ goPartner }}" style="color:{{ uiFg }};padding:10px 15px;white-space:nowrap;transition:color .6s ease" style-hover="background:rgba(255,255,255,.2)">Partner</a>
+            <a href="#" onClick="{{ goContact }}" style="color:{{ uiFg }};padding:10px 15px;white-space:nowrap;transition:color .6s ease" style-hover="background:rgba(255,255,255,.2)">Reach Us</a>
+            <a href="#" onClick="{{ goCart }}" style="background:{{ uiBtnBg }};color:{{ uiBtnFg }};padding:11px 20px;margin-left:10px;transition:background .6s ease,color .6s ease">Cart · 3</a>
+          </nav>
+        </div>
+      </header>
+
+      <div style="display:grid;min-height:100vh">
+        <sc-for list="{{ slides }}" as="s" hint-placeholder-count="1">
+          <div role="group" aria-roledescription="slide" aria-label="{{ s.aria }}" aria-hidden="{{ s.hidden }}" style="grid-area:1 / 1;position:relative;display:flex;align-items:center;overflow:hidden;background:{{ s.bg }};color:{{ s.fg }};opacity:{{ s.op }};transform:{{ s.shift }};z-index:{{ s.z }};pointer-events:{{ s.pe }};transition:opacity .9s ease,transform .9s cubic-bezier(.7,0,.2,1)">
+
+            <sc-if value="{{ s.noPhoto }}" hint-placeholder-val="{{ true }}">
+              <div style="position:absolute;top:-16%;right:-8%;width:min(64vw,900px);aspect-ratio:1/1;border-radius:50%;background:{{ s.deco }};pointer-events:none"></div>
+              <div style="position:absolute;bottom:-26%;left:-12%;width:min(50vw,640px);aspect-ratio:1/1;border-radius:50%;background:{{ s.deco2 }};pointer-events:none"></div>
+            </sc-if>
+            <sc-if value="{{ s.photo }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute;inset:0;background-image:{{ s.photoBg }};background-size:cover;background-position:center;transform:{{ s.kb }};transition:transform 8s ease-out"></div>
+              <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,14,10,.78) 0%,rgba(20,14,10,.45) 45%,rgba(20,14,10,.05) 80%),linear-gradient(0deg,rgba(20,14,10,.55) 0%,transparent 30%)"></div>
+            </sc-if>
+
+            <div style="position:relative;z-index:2;max-width:1360px;width:100%;margin:0 auto;padding:132px 32px 172px;display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:40px;align-items:center">
+              <div style="min-width:0;opacity:{{ s.textOp }};transform:{{ s.textY }};transition:opacity .8s ease .25s,transform .8s cubic-bezier(.2,.7,.2,1) .25s">
+                <div style="display:inline-flex;align-items:center;gap:10px;background:{{ s.pillBg }};border:1px solid {{ s.line }};padding:8px 14px;margin-bottom:28px">
+                  <span style="width:7px;height:7px;background:{{ s.dot }};border-radius:50%"></span>
+                  <span style="font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap">{{ s.eyebrow }}</span>
+                </div>
+                <h2 style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:800;font-size:clamp(46px,6.8vw,100px);line-height:.93;letter-spacing:-.04em;margin:0 0 26px;text-wrap:balance">{{ s.h1a }}<br /><span style="color:{{ s.accentText }}">{{ s.h1b }}</span></h2>
+                <p style="font-size:19px;line-height:1.6;font-weight:500;margin:0 0 30px;max-width:44ch;opacity:.92;text-wrap:pretty">{{ s.body }}</p>
+                <div style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:700;font-size:20px;letter-spacing:-.01em;margin-bottom:30px">{{ s.price }}</div>
+                <div style="display:flex;gap:12px;flex-wrap:wrap">
+                  <a href="#" onClick="{{ s.go1 }}" style="background:{{ s.btnBg }};color:{{ s.btnFg }};padding:18px 34px;font-weight:800;font-size:16px" style-hover="opacity:.88">{{ s.cta1 }}</a>
+                  <a href="#" onClick="{{ s.go2 }}" style="border:2px solid {{ s.line }};color:{{ s.fg }};padding:16px 34px;font-weight:800;font-size:16px" style-hover="background:rgba(255,255,255,.14)">{{ s.cta2 }}</a>
+                </div>
+              </div>
+              <sc-if value="{{ s.noPhoto }}" hint-placeholder-val="{{ true }}">
+                <div style="min-width:0;display:flex;align-items:center;justify-content:center;min-height:340px">
+                  <div role="img" aria-label="{{ s.aria }}" style="width:100%;max-width:620px;height:min(62vh,560px);background-image:{{ s.packBg }};background-size:contain;background-repeat:no-repeat;background-position:center;filter:drop-shadow(0 32px 60px rgba(0,0,0,.4));opacity:{{ s.packOp }};transform:{{ s.packT }};transition:opacity 1s ease .15s,transform 1.2s cubic-bezier(.2,.7,.2,1) .15s"></div>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="position:absolute;z-index:15;left:0;right:0;bottom:0;background:linear-gradient(0deg,rgba(0,0,0,.14),transparent)">
+        <div style="max-width:1360px;margin:0 auto;padding:0 32px 30px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:40px;align-items:end">
+          <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px">
+            <sc-for list="{{ slides }}" as="s" hint-placeholder-count="4">
+              <button onClick="{{ s.pick }}" aria-label="{{ s.aria }}" style="background:none;border:0;padding:14px 0 4px;text-align:left;cursor:pointer;color:{{ uiFg }};transition:color .6s ease">
+                <div style="height:3px;background:{{ uiTrack }};position:relative;overflow:hidden;margin-bottom:12px">
+                  <div onAnimationEnd="{{ onBarEnd }}" style="position:absolute;inset:0;background:{{ uiFg }};transform-origin:left center;transform:{{ s.barT }};animation:{{ s.barAnim }};animation-play-state:{{ playState }}"></div>
+                </div>
+                <div style="font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:{{ s.labelOp }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:opacity .4s ease"><span style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:800;margin-right:8px">{{ s.no }}</span>{{ s.tab }}</div>
+              </button>
+            </sc-for>
+          </div>
+          <div style="display:flex;align-items:center;gap:18px;color:{{ uiFg }};transition:color .6s ease">
+            <div style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:800;font-size:15px;letter-spacing:.02em;white-space:nowrap">{{ counter }} <span style="opacity:.55">/ {{ total }}</span></div>
+            <div style="display:flex;gap:8px">
+              <button onClick="{{ heroPrev }}" aria-label="Previous slide" style="width:52px;height:52px;border:2px solid {{ uiLine }};background:transparent;color:{{ uiFg }};font-size:20px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:rgba(255,255,255,.2)">←</button>
+              <button onClick="{{ heroNext }}" aria-label="Next slide" style="width:52px;height:52px;border:0;background:{{ uiBtnBg }};color:{{ uiBtnFg }};font-size:20px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .6s ease" style-hover="opacity:.88">→</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div style="background:#1C1917;color:#FFB703;overflow:hidden;padding:15px 0">
+      <div style="display:flex;width:max-content;padding-left:32px;animation:v4run 30s linear infinite;font-weight:700;font-size:14px;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap">
+        <span style="padding-right:30px">No added colour</span><span style="padding-right:30px;color:#E4341C">◆</span>
+        <span style="padding-right:30px">Ground in our own mill</span><span style="padding-right:30px;color:#E4341C">◆</span>
+        <span style="padding-right:30px">Sealed the same day</span><span style="padding-right:30px;color:#E4341C">◆</span>
+        <span style="padding-right:30px">FSSAI licensed unit</span><span style="padding-right:30px;color:#E4341C">◆</span>
+        <span style="padding-right:30px">39 years, one family</span><span style="padding-right:30px;color:#E4341C">◆</span>
+        <span style="padding-right:30px">No added colour</span><span style="padding-right:30px;color:#E4341C">◆</span>
+        <span style="padding-right:30px">Ground in our own mill</span><span style="padding-right:30px;color:#E4341C">◆</span>
+        <span style="padding-right:30px">Sealed the same day</span><span style="padding-right:30px;color:#E4341C">◆</span>
+        <span style="padding-right:30px">FSSAI licensed unit</span><span style="padding-right:30px;color:#E4341C">◆</span>
+        <span style="padding-right:30px">39 years, one family</span><span style="padding-right:30px;color:#E4341C">◆</span>
+      </div>
+    </div>
+
+    <section style="max-width:1360px;margin:0 auto;padding:76px 32px 0">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:28px">
+        <div>
+          <div style="font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#E4341C;margin-bottom:14px">Browse the range</div>
+          <h2 style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:700;font-size:clamp(32px,4.2vw,54px);line-height:1;letter-spacing:-.03em;margin:0">Pick your shelf</h2>
+        </div>
+        <a href="#" onClick="{{ goShop }}" style="border:2px solid #1C1917;color:#1C1917;padding:13px 24px;font-weight:800;font-size:15px" style-hover="background:#1C1917;color:#FFFBF4">All 26 products →</a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+        <sc-for list="{{ categories }}" as="c" hint-placeholder-count="4">
+          <a href="#" onClick="{{ goShop }}" style="display:block;background:{{ c.bg }};color:{{ c.fg }}" style-hover="opacity:.9">
+            <div style="aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;padding:28px">
+              <div role="img" aria-label="{{ c.name }}" style="flex:1;align-self:stretch;background-image:{{ c.imgBg }};background-size:contain;background-repeat:no-repeat;background-position:center"></div>
+            </div>
+            <div style="padding:22px 24px 26px;border-top:1px solid rgba(0,0,0,.14)">
+              <div style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:700;font-size:24px;line-height:1.05;letter-spacing:-.02em;margin-bottom:9px">{{ c.name }}</div>
+              <div style="font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;opacity:.85">{{ c.meta }}</div>
+            </div>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="max-width:1360px;margin:0 auto;padding:76px 32px 0">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:28px">
+        <div>
+          <div style="font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#E4341C;margin-bottom:14px">Most reordered</div>
+          <h2 style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:700;font-size:clamp(32px,4.2vw,54px);line-height:1;letter-spacing:-.03em;margin:0">Everybody buys these twice</h2>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+        <sc-for list="{{ bestsellers }}" as="p" hint-placeholder-count="4">
+          <div style="background:#fff;border:1px solid rgba(28,25,23,.14);display:flex;flex-direction:column" style-hover="border:1px solid #E4341C">
+            <div style="position:relative;aspect-ratio:1/1;background:{{ p.bg }};display:flex;align-items:center;justify-content:center;padding:26px">
+              <div role="img" aria-label="{{ p.name }}" style="flex:1;align-self:stretch;background-image:{{ p.imgBg }};background-size:contain;background-repeat:no-repeat;background-position:center"></div>
+              <span style="position:absolute;top:12px;left:12px;background:#1C1917;color:#FFB703;font-weight:700;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:6px 10px">{{ p.badge }}</span>
+            </div>
+            <div style="padding:20px;display:flex;flex-direction:column;gap:9px;flex:1;border-top:1px solid rgba(28,25,23,.1)">
+              <div style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:700;font-size:21px;line-height:1.1;letter-spacing:-.02em">{{ p.name }}</div>
+              <div style="font-weight:600;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7A6E62">{{ p.sizes }}</div>
+              <div style="display:flex;align-items:baseline;gap:9px;margin-top:auto;padding-top:8px">
+                <span style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:800;font-size:26px;color:#E4341C">{{ p.price }}</span>
+                <span style="font-size:14px;font-weight:600;color:#9A8E82;text-decoration:line-through">{{ p.was }}</span>
+              </div>
+              <a href="#" onClick="{{ goProduct }}" style="background:#1C1917;color:#FFFBF4;text-align:center;padding:14px;font-weight:800;font-size:14px" style-hover="background:#E4341C;color:#FFFBF4">Add to cart</a>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="max-width:1360px;margin:0 auto;padding:76px 32px 0">
+      <div style="background:#167D4E;color:#FFFBF4;padding:52px 44px 48px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;margin-bottom:36px">
+          <h2 style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:700;font-size:clamp(30px,4vw,50px);line-height:1.02;letter-spacing:-.03em;margin:0;max-width:20ch">Five things we control end to end</h2>
+          <p style="font-size:18px;font-weight:500;line-height:1.55;margin:0;max-width:44ch;color:rgba(255,251,244,.92)">"Jo apno se kare pyaar, wo kaise kare unki health se khilwad." One who loves their family cannot compromise on their health.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px">
+          <sc-for list="{{ promises }}" as="q" hint-placeholder-count="5">
+            <div style="background:#FFFBF4;color:#1C1917;padding:24px 22px 28px">
+              <div style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:800;font-size:28px;line-height:1;color:#E4341C;margin-bottom:14px">{{ q.no }}</div>
+              <div style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:700;font-size:18px;line-height:1.15;letter-spacing:-.015em;margin-bottom:10px">{{ q.title }}</div>
+              <div style="font-size:14px;line-height:1.55;font-weight:500;color:#5A5048">{{ q.body }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <section style="max-width:1360px;margin:0 auto;padding:76px 32px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:16px;align-items:stretch">
+      <div style="min-width:0;background:#FFB703;color:#1C1917;padding:48px 42px;display:flex;flex-direction:column;justify-content:center">
+        <div style="display:inline-flex;align-self:flex-start;background:#1C1917;color:#FFB703;font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:8px 13px;margin-bottom:26px">Since 1987 · Vadodara</div>
+        <h2 style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:700;font-size:clamp(30px,3.8vw,48px);line-height:1.02;letter-spacing:-.03em;margin:0 0 20px;text-wrap:pretty">She left insurance to grind spices properly.</h2>
+        <p style="font-size:17px;font-weight:500;line-height:1.65;margin:0 0 30px;max-width:46ch">Ravneet Kaur Anand founded RKR Foods in 1987 with one rule: nothing leaves the unit that she would not cook with at home. Thirty-nine years on, every blend is still mixed and ground on that same floor in Gorwa.</p>
+        <a href="#" onClick="{{ goAbout }}" style="align-self:flex-start;background:#1C1917;color:#FFFBF4;padding:16px 30px;font-weight:800;font-size:15px" style-hover="background:#E4341C;color:#FFFBF4">Read the full story →</a>
+      </div>
+      <div style="min-width:0;background:#F0E6D6;border:1px solid rgba(28,25,23,.16);min-height:420px;display:flex;align-items:flex-end;padding:26px">
+        <span style="font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#8A7C6C;line-height:1.5">Image 02 — founder portrait,<br />Ravneet Kaur Anand on the mill floor</span>
+      </div>
+    </section>
+
+    <section style="max-width:1360px;margin:0 auto;padding:16px 32px 0">
+      <div style="background:#E4341C;color:#FFFBF4;display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));align-items:center">
+        <div style="min-width:0;padding:52px 44px">
+          <div style="display:inline-flex;background:#FFB703;color:#1C1917;font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:8px 13px;margin-bottom:24px">Save 20%</div>
+          <h2 style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:800;font-size:clamp(32px,4.2vw,54px);line-height:1;letter-spacing:-.03em;margin:0 0 20px">Kitchen E Bahar — the whole shelf in one box.</h2>
+          <p style="font-size:17px;font-weight:500;line-height:1.65;margin:0 0 28px;max-width:44ch;color:rgba(255,251,244,.92)">Fourteen spices and masalas in a single crate. For a new home, a hostel kitchen, or a wedding gift that actually gets used.</p>
+          <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:30px;flex-wrap:wrap">
+            <span style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:800;font-size:56px;line-height:1;color:#FFB703">₹950</span>
+            <span style="font-size:18px;font-weight:600;text-decoration:line-through;opacity:.8">₹1,185</span>
+          </div>
+          <a href="#" onClick="{{ goProduct }}" style="background:#FFFBF4;color:#E4341C;padding:18px 34px;font-weight:800;font-size:16px;display:inline-block" style-hover="background:#FFB703;color:#1C1917">Get the kit →</a>
+        </div>
+        <div style="min-width:0;display:flex;align-items:center;justify-content:center;padding:36px;min-height:420px">
+          <img src="uploads/HQSP%20-%20Kitchen%20E%20Bahar.png" alt="Kitchen E Bahar kit" style="width:100%;max-width:520px;height:auto;display:block;filter:drop-shadow(0 24px 44px rgba(60,10,0,.38))" />
+        </div>
+      </div>
+    </section>
+
+    <section style="max-width:1360px;margin:0 auto;padding:76px 32px 0">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:28px">
+        <div>
+          <div style="font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#E4341C;margin-bottom:14px">Recipes</div>
+          <h2 style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:700;font-size:clamp(32px,4.2vw,54px);line-height:1;letter-spacing:-.03em;margin:0">Cook something tonight</h2>
+        </div>
+        <a href="#" onClick="{{ goRecipes }}" style="border:2px solid #1C1917;color:#1C1917;padding:13px 24px;font-weight:800;font-size:15px" style-hover="background:#1C1917;color:#FFFBF4">All recipes →</a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+        <sc-for list="{{ recipes3 }}" as="r" hint-placeholder-count="3">
+          <a href="#" onClick="{{ goRecipes }}" style="display:block;background:#fff;border:1px solid rgba(28,25,23,.14);color:#1C1917" style-hover="border:1px solid #E4341C">
+            <div style="aspect-ratio:4/3;background:#F0E6D6;display:flex;align-items:flex-end;padding:18px">
+              <span style="font-weight:600;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8A7C6C;line-height:1.5">{{ r.shot }}</span>
+            </div>
+            <div style="padding:22px;border-top:1px solid rgba(28,25,23,.1)">
+              <div style="font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#E4341C;margin-bottom:11px">{{ r.meta }}</div>
+              <div style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:700;font-size:23px;line-height:1.1;letter-spacing:-.02em">{{ r.title }}</div>
+            </div>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="max-width:1360px;margin:0 auto;padding:76px 32px 80px">
+      <div style="background:#1C1917;color:#FFFBF4;padding:52px 44px;display:flex;justify-content:space-between;align-items:center;gap:36px;flex-wrap:wrap">
+        <div style="max-width:54ch">
+          <div style="font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#FFB703;margin-bottom:18px">Distributors · Retailers · HoReCa</div>
+          <h2 style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:700;font-size:clamp(28px,3.6vw,46px);line-height:1.02;letter-spacing:-.03em;margin:0 0 16px">Stock a spice brand that makes its own spices.</h2>
+          <p style="font-size:17px;font-weight:500;line-height:1.65;margin:0;color:#B8ADA2">Manufacturer-direct margins, display-ready packs, dispatch straight from Vadodara.</p>
+        </div>
+        <a href="#" onClick="{{ goPartner }}" style="background:#FFB703;color:#1C1917;padding:18px 34px;font-weight:800;font-size:16px" style-hover="background:#E4341C;color:#FFFBF4">Become a partner →</a>
+      </div>
+    </section>
+  </main>
+  </sc-if>
+
+  <!-- ============ INNER-PAGE HEADER ============ -->
+  <sc-if value="{{ notHome }}" hint-placeholder-val="{{ false }}">
+  <header style="position:sticky;top:0;z-index:60;background:#FFFBF4;border-bottom:1px solid rgba(28,25,23,.16)">
+    <div style="max-width:1360px;margin:0 auto;padding:12px 32px;display:flex;align-items:center;gap:32px;flex-wrap:wrap">
+      <a href="#" onClick="{{ goHome }}" style="display:flex;align-items:center;flex-shrink:0">
+        <img src="uploads/Home-Queen-Logo-R-1.webp" alt="Home Queen" style="height:50px;width:auto;display:block" />
+      </a>
+      <nav style="display:flex;gap:4px;margin-left:auto;align-items:center;flex-wrap:wrap;font-weight:700;font-size:14px">
+        <a href="#" onClick="{{ goShop }}" style="color:#1C1917;padding:10px 15px;white-space:nowrap" style-hover="background:#FFB703;color:#1C1917">Shop</a>
+        <a href="#" onClick="{{ goAbout }}" style="color:#1C1917;padding:10px 15px;white-space:nowrap" style-hover="background:#FFB703;color:#1C1917">Our Story</a>
+        <a href="#" onClick="{{ goRecipes }}" style="color:#1C1917;padding:10px 15px;white-space:nowrap" style-hover="background:#FFB703;color:#1C1917">Recipes</a>
+        <a href="#" onClick="{{ goPartner }}" style="color:#1C1917;padding:10px 15px;white-space:nowrap" style-hover="background:#FFB703;color:#1C1917">Partner</a>
+        <a href="#" onClick="{{ goContact }}" style="color:#1C1917;padding:10px 15px;white-space:nowrap" style-hover="background:#FFB703;color:#1C1917">Reach Us</a>
+        <a href="#" onClick="{{ goCart }}" style="background:#E4341C;color:#FFFBF4;padding:11px 20px;margin-left:10px" style-hover="background:#1C1917;color:#FFB703">Cart · 3</a>
+      </nav>
+    </div>
+  </header>
+  </sc-if>
+
+  <!-- ============ SHOP ============ -->
+  <sc-if value="{{ isShop }}" hint-placeholder-val="{{ false }}">
+  <main style="max-width:1360px;margin:0 auto;padding:32px 32px 80px">
+    <div style="font-weight:600;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8A7C6C;margin-bottom:18px">Home / Shop</div>
+    <h1 style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:800;font-size:clamp(40px,5.6vw,76px);line-height:.96;letter-spacing:-.035em;margin:0 0 16px">All spices &amp; masalas</h1>
+    <p style="font-size:18px;font-weight:500;line-height:1.6;color:#5A5048;margin:0 0 40px;max-width:52ch">26 products, every one ground in our own unit. Free shipping above ₹249.</p>
+    <div style="display:grid;grid-template-columns:240px minmax(0,1fr);gap:40px;align-items:start">
+      <aside style="position:sticky;top:104px;display:flex;flex-direction:column;gap:32px">
+        <div>
+          <div style="font-weight:800;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#E4341C;border-bottom:1px solid rgba(28,25,23,.18);padding-bottom:11px;margin-bottom:16px">Category</div>
+          <div style="display:flex;flex-direction:column;gap:12px;font-size:15px;font-weight:500">
+            <sc-for list="{{ shopFilters }}" as="f" hint-placeholder-count="5">
+              <label style="display:flex;align-items:center;gap:10px;cursor:pointer">
+                <input type="checkbox" style="accent-color:#E4341C;width:16px;height:16px" />
+                <span>{{ f.name }}</span>
+                <span style="margin-left:auto;font-weight:700;font-size:12px;color:#8A7C6C">{{ f.count }}</span>
+              </label>
+            </sc-for>
+          </div>
+        </div>
+        <div>
+          <div style="font-weight:800;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#E4341C;border-bottom:1px solid rgba(28,25,23,.18);padding-bottom:11px;margin-bottom:16px">Pack size</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <span style="background:#1C1917;color:#FFFBF4;padding:9px 14px;font-weight:700;font-size:12px;white-space:nowrap;cursor:pointer">100 g</span>
+            <span style="border:1px solid rgba(28,25,23,.28);padding:8px 14px;font-weight:700;font-size:12px;white-space:nowrap;cursor:pointer">200 g</span>
+            <span style="border:1px solid rgba(28,25,23,.28);padding:8px 14px;font-weight:700;font-size:12px;white-space:nowrap;cursor:pointer">500 g</span>
+            <span style="border:1px solid rgba(28,25,23,.28);padding:8px 14px;font-weight:700;font-size:12px;white-space:nowrap;cursor:pointer">1 kg</span>
+          </div>
+        </div>
+        <div>
+          <div style="font-weight:800;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#E4341C;border-bottom:1px solid rgba(28,25,23,.18);padding-bottom:11px;margin-bottom:16px">Price</div>
+          <div style="font-weight:700;font-size:14px">₹40 — ₹950</div>
+          <div style="height:4px;background:rgba(28,25,23,.16);margin-top:14px;position:relative">
+            <div style="position:absolute;left:0;right:35%;top:0;bottom:0;background:#E4341C"></div>
+          </div>
+        </div>
+      </aside>
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(28,25,23,.16);padding-bottom:16px;margin-bottom:28px;font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#5A5048;flex-wrap:wrap;gap:12px">
+          <span>Showing 12 of 26</span>
+          <span>Sort: Popularity ▾</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+          <sc-for list="{{ catalogue }}" as="p" hint-placeholder-count="9">
+            <div style="background:#fff;border:1px solid rgba(28,25,23,.14);display:flex;flex-direction:column" style-hover="border:1px solid #E4341C">
+              <div style="position:relative;aspect-ratio:1/1;background:{{ p.bg }};display:flex;align-items:center;justify-content:center;padding:26px">
+                <div role="img" aria-label="{{ p.name }}" style="flex:1;align-self:stretch;background-image:{{ p.imgBg }};background-size:contain;background-repeat:no-repeat;background-position:center"></div>
+                <span style="position:absolute;top:12px;left:12px;background:#1C1917;color:#FFB703;font-weight:700;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:6px 10px">{{ p.cat }}</span>
+              </div>
+              <div style="padding:20px;display:flex;flex-direction:column;gap:8px;flex:1;border-top:1px solid rgba(28,25,23,.1)">
+                <div style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:700;font-size:20px;line-height:1.1;letter-spacing:-.02em">{{ p.name }}</div>
+                <div style="font-weight:600;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7A6E62">{{ p.sizes }}</div>
+                <div style="display:flex;align-items:baseline;gap:9px;margin-top:auto;padding-top:8px">
+                  <span style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:800;font-size:24px;color:#E4341C">{{ p.price }}</span>
+                  <span style="font-size:13px;font-weight:600;color:#9A8E82;text-decoration:line-through">{{ p.was }}</span>
+                </div>
+                <a href="#" onClick="{{ goProduct }}" style="background:#1C1917;color:#FFFBF4;text-align:center;padding:13px;font-weight:800;font-size:13px" style-hover="background:#E4341C;color:#FFFBF4">Add to cart</a>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;justify-content:center;margin-top:44px">
+          <a href="#" onClick="{{ noop }}" style="border:2px solid #1C1917;color:#1C1917;padding:16px 44px;font-weight:800;font-size:15px" style-hover="background:#1C1917;color:#FFFBF4">Load 14 more</a>
+        </div>
+      </div>
+    </div>
+  </main>
+  </sc-if>
+
+  <!-- ============ PRODUCT ============ -->
+  <sc-if value="{{ isProduct }}" hint-placeholder-val="{{ false }}">
+  <main style="max-width:1360px;margin:0 auto;padding:32px 32px 80px">
+    <div style="font-weight:600;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8A7C6C;margin-bottom:26px">Home / Shop / Basic Spices / Kashmiri Chilli</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:56px;align-items:start">
+      <div style="min-width:0;display:grid;grid-template-columns:84px minmax(0,1fr);gap:14px">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="aspect-ratio:1/1;border:2px solid #E4341C;background:#FFF0D4;display:flex;align-items:center;justify-content:center;padding:8px">
+            <img src="uploads/HQSP%20-%20Kashmiri%20Chilli.png" alt="Kashmiri Chilli" style="max-width:100%;max-height:100%;object-fit:contain;display:block" />
+          </div>
+          <div style="aspect-ratio:1/1;border:1px dashed rgba(28,25,23,.32);background:#F0E6D6;display:flex;align-items:center;justify-content:center;padding:5px;text-align:center">
+            <span style="font-weight:700;font-size:9px;line-height:1.3;letter-spacing:.06em;text-transform:uppercase;color:#8A7C6C">Pack back</span>
+          </div>
+          <div style="aspect-ratio:1/1;border:1px dashed rgba(28,25,23,.32);background:#F0E6D6;display:flex;align-items:center;justify-content:center;padding:5px;text-align:center">
+            <span style="font-weight:700;font-size:9px;line-height:1.3;letter-spacing:.06em;text-transform:uppercase;color:#8A7C6C">Texture</span>
+          </div>
+          <div style="aspect-ratio:1/1;border:1px dashed rgba(28,25,23,.32);background:#F0E6D6;display:flex;align-items:center;justify-content:center;padding:5px;text-align:center">
+            <span style="font-weight:700;font-size:9px;line-height:1.3;letter-spacing:.06em;text-transform:uppercase;color:#8A7C6C">In use</span>
+          </div>
+        </div>
+        <div style="aspect-ratio:1/1;background:#FFF0D4;border:1px solid rgba(28,25,23,.14);display:flex;align-items:center;justify-content:center;padding:44px">
+          <img src="uploads/HQSP%20-%20Kashmiri%20Chilli.png" alt="Kashmiri Chilli" style="max-width:100%;max-height:100%;object-fit:contain;display:block" />
+        </div>
+      </div>
+      <div style="min-width:0">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px">
+          <span style="background:#167D4E;color:#FFFBF4;font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:7px 12px">In stock</span>
+          <span style="border:1px solid rgba(28,25,23,.28);font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:6px 12px">Basic spices</span>
+        </div>
+        <h1 style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:800;font-size:clamp(38px,5vw,66px);line-height:.96;letter-spacing:-.035em;margin:0 0 18px">Kashmiri Chilli</h1>
+        <p style="font-size:18px;font-weight:500;line-height:1.65;color:#5A5048;margin:0 0 30px;max-width:48ch">Deep red colour, gentle heat. Ground from whole Kashmiri chillies with the stalks removed by hand — the colour in your gravy comes from the chilli, not from dye.</p>
+        <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:32px;padding-bottom:30px;border-bottom:1px solid rgba(28,25,23,.16);flex-wrap:wrap">
+          <span style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:800;font-size:48px;line-height:1;color:#E4341C">₹60</span>
+          <span style="font-size:17px;font-weight:600;color:#9A8E82;text-decoration:line-through">₹80</span>
+          <span style="font-weight:600;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8A7C6C">Incl. all taxes</span>
+        </div>
+        <div style="font-weight:800;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#E4341C;margin-bottom:14px">Pack size</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px">
+          <sc-for list="{{ variants }}" as="v" hint-placeholder-count="4">
+            <div style="border:1px solid rgba(28,25,23,.28);background:#fff;padding:13px 20px;text-align:center;cursor:pointer" style-hover="border:1px solid #E4341C;background:#FFF0D4">
+              <div style="font-weight:700;font-size:13px;white-space:nowrap">{{ v.size }}</div>
+              <div style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:800;font-size:18px;margin-top:5px;color:#E4341C">{{ v.price }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;border:1px solid rgba(28,25,23,.28);background:#fff">
+            <span style="padding:16px 17px;cursor:pointer;font-weight:800">−</span>
+            <span style="padding:16px 4px;font-weight:800;min-width:30px;text-align:center">1</span>
+            <span style="padding:16px 17px;cursor:pointer;font-weight:800">+</span>
+          </div>
+          <a href="#" onClick="{{ goCart }}" style="flex:1;min-width:180px;background:#E4341C;color:#FFFBF4;text-align:center;padding:18px;font-weight:800;font-size:16px" style-hover="background:#1C1917;color:#FFFBF4">Add to cart</a>
+          <a href="#" onClick="{{ goCart }}" style="background:#FFB703;color:#1C1917;padding:18px 28px;font-weight:800;font-size:16px" style-hover="background:#1C1917;color:#FFB703">Buy now</a>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:rgba(28,25,23,.16);border:1px solid rgba(28,25,23,.16);margin-bottom:34px">
+          <div style="background:#FFF0D4;padding:16px 18px;font-weight:700;font-size:11px;line-height:1.5;letter-spacing:.08em;text-transform:uppercase;color:#5A5048">Free shipping above ₹249</div>
+          <div style="background:#FFF0D4;padding:16px 18px;font-weight:700;font-size:11px;line-height:1.5;letter-spacing:.08em;text-transform:uppercase;color:#5A5048">Dispatch in 24 hours</div>
+          <div style="background:#FFF0D4;padding:16px 18px;font-weight:700;font-size:11px;line-height:1.5;letter-spacing:.08em;text-transform:uppercase;color:#5A5048">Call +91 8866 911 100</div>
+        </div>
+        <div style="border-top:1px solid rgba(28,25,23,.16)">
+          <sc-for list="{{ accordions }}" as="a" hint-placeholder-count="4">
+            <div style="border-bottom:1px solid rgba(28,25,23,.16);padding:20px 0">
+              <div style="display:flex;justify-content:space-between;align-items:center;cursor:pointer;margin-bottom:11px">
+                <span style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:700;font-size:17px;letter-spacing:-.01em">{{ a.title }}</span>
+                <span style="font-weight:800;font-size:18px;color:#E4341C">+</span>
+              </div>
+              <div style="font-size:16px;line-height:1.7;font-weight:500;color:#5A5048;max-width:52ch">{{ a.body }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:72px">
+      <h2 style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:700;font-size:clamp(28px,3.6vw,44px);line-height:1;letter-spacing:-.03em;margin:0 0 26px">Goes with</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+        <sc-for list="{{ bestsellers }}" as="p" hint-placeholder-count="4">
+          <div style="background:#fff;border:1px solid rgba(28,25,23,.14)" style-hover="border:1px solid #E4341C">
+            <div style="aspect-ratio:1/1;background:{{ p.bg }};display:flex;align-items:center;justify-content:center;padding:26px">
+              <div role="img" aria-label="{{ p.name }}" style="flex:1;align-self:stretch;background-image:{{ p.imgBg }};background-size:contain;background-repeat:no-repeat;background-position:center"></div>
+            </div>
+            <div style="padding:20px;border-top:1px solid rgba(28,25,23,.1)">
+              <div style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:700;font-size:19px;line-height:1.1;letter-spacing:-.02em;margin-bottom:8px">{{ p.name }}</div>
+              <div style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:800;font-size:20px;color:#E4341C">{{ p.price }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </main>
+  </sc-if>
+
+  <!-- ============ ABOUT ============ -->
+  <sc-if value="{{ isAbout }}" hint-placeholder-val="{{ false }}">
+  <main>
+    <section style="background:#167D4E;color:#FFFBF4">
+      <div style="max-width:1000px;margin:0 auto;padding:88px 32px 80px">
+        <div style="font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#FFB703;margin-bottom:26px">Our story</div>
+        <h1 style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:800;font-size:clamp(42px,6vw,88px);line-height:.94;letter-spacing:-.04em;margin:0 0 26px;text-wrap:balance">Thirty-nine years of grinding our own spices.</h1>
+        <p style="font-size:19px;font-weight:500;line-height:1.7;margin:0;max-width:58ch;color:rgba(255,251,244,.92);text-wrap:pretty">RKR Foods has run the same unit in Gorwa, Vadodara since 1987. Home Queen is the brand we put on the shelf — the blends we make for our own kitchens.</p>
+      </div>
+    </section>
+    <div style="max-width:1360px;margin:0 auto;padding:32px 32px 0">
+      <div style="aspect-ratio:21/9;background:#F0E6D6;border:1px solid rgba(28,25,23,.16);display:flex;align-items:flex-end;padding:26px">
+        <span style="font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#8A7C6C">Image 01 — wide shot of the Gorwa grinding floor with staff at work</span>
+      </div>
+    </div>
+    <section style="max-width:1360px;margin:0 auto;padding:72px 32px 80px;display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:64px;align-items:start">
+      <div style="min-width:0;position:sticky;top:104px">
+        <div style="font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#E4341C;margin-bottom:20px">The timeline</div>
+        <h2 style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:700;font-size:clamp(30px,3.8vw,46px);line-height:1.02;letter-spacing:-.03em;margin:0 0 20px">From one grinder to twenty-six SKUs.</h2>
+        <p style="font-size:17px;font-weight:500;line-height:1.7;color:#5A5048;margin:0">Ravneet Kaur Anand was an insurance underwriter before she was a spice manufacturer. She still sets the quality standard the unit works to.</p>
+      </div>
+      <div style="min-width:0">
+        <sc-for list="{{ timeline }}" as="t" hint-placeholder-count="5">
+          <div style="display:grid;grid-template-columns:96px minmax(0,1fr);gap:28px;padding:28px 0;border-bottom:1px solid rgba(28,25,23,.14)">
+            <div style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:800;font-size:20px;line-height:1.2;color:#E4341C">{{ t.year }}</div>
+            <div>
+              <div style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:700;font-size:23px;line-height:1.15;letter-spacing:-.02em;margin-bottom:10px">{{ t.title }}</div>
+              <div style="font-size:16px;font-weight:500;line-height:1.7;color:#5A5048;max-width:54ch">{{ t.body }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+    <section style="background:#1C1917;color:#FFFBF4">
+      <div style="max-width:1360px;margin:0 auto;padding:88px 32px">
+        <h2 style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:700;font-size:clamp(30px,4vw,52px);line-height:1;letter-spacing:-.03em;margin:0 0 44px">From whole spice to sealed pack</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px">
+          <sc-for list="{{ process }}" as="s" hint-placeholder-count="4">
+            <div>
+              <div style="aspect-ratio:4/5;background:#2A2522;border:1px solid rgba(255,251,244,.16);display:flex;align-items:flex-end;padding:16px;margin-bottom:20px">
+                <span style="font-weight:600;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#8A7C6C;line-height:1.5">{{ s.shot }}</span>
+              </div>
+              <div style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:800;font-size:22px;line-height:1;color:#FFB703;margin-bottom:12px">{{ s.no }}</div>
+              <div style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:700;font-size:21px;line-height:1.1;letter-spacing:-.02em;margin-bottom:10px">{{ s.title }}</div>
+              <div style="font-size:14px;font-weight:500;line-height:1.65;color:#B8ADA2">{{ s.body }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+  </main>
+  </sc-if>
+
+  <!-- ============ PARTNER ============ -->
+  <sc-if value="{{ isPartner }}" hint-placeholder-val="{{ false }}">
+  <main>
+    <section style="background:#1C1917;color:#FFFBF4">
+      <div style="max-width:1360px;margin:0 auto;padding:80px 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:56px;align-items:center">
+        <div style="min-width:0">
+          <div style="font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#FFB703;margin-bottom:26px">Distributors · Retailers · HoReCa</div>
+          <h1 style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:800;font-size:clamp(38px,5.2vw,72px);line-height:.96;letter-spacing:-.04em;margin:0 0 22px">Sell a spice brand that makes its own spices.</h1>
+          <p style="font-size:18px;font-weight:500;line-height:1.7;margin:0;max-width:48ch;color:#B8ADA2">Manufacturer-direct supply from Vadodara. No middle layer, no contract blender, consistent lot-to-lot quality across 26 SKUs.</p>
+        </div>
+        <div style="min-width:0;background:#FFFBF4;color:#1C1917;padding:40px 36px">
+          <div style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:700;font-size:28px;letter-spacing:-.025em;margin-bottom:24px">Partnership enquiry</div>
+          <div style="display:grid;gap:12px">
+            <input placeholder="Full name" style="width:100%;min-width:0;border:1px solid rgba(28,25,23,.28);background:#fff;padding:14px 15px;font-size:15px;font-weight:500" />
+            <input placeholder="Firm / shop name" style="width:100%;min-width:0;border:1px solid rgba(28,25,23,.28);background:#fff;padding:14px 15px;font-size:15px;font-weight:500" />
+            <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+              <input placeholder="City" style="width:100%;min-width:0;border:1px solid rgba(28,25,23,.28);background:#fff;padding:14px 15px;font-size:15px;font-weight:500" />
+              <input placeholder="Phone" style="width:100%;min-width:0;border:1px solid rgba(28,25,23,.28);background:#fff;padding:14px 15px;font-size:15px;font-weight:500" />
+            </div>
+            <select style="width:100%;min-width:0;border:1px solid rgba(28,25,23,.28);background:#fff;padding:14px 15px;font-size:15px;font-weight:500;color:#5A5048">
+              <option>I am a … distributor</option>
+              <option>Retailer / kirana</option>
+              <option>Restaurant / caterer</option>
+              <option>Exporter</option>
+            </select>
+            <textarea placeholder="Monthly volume you expect to move" rows="3" style="width:100%;min-width:0;border:1px solid rgba(28,25,23,.28);background:#fff;padding:14px 15px;font-size:15px;font-weight:500;resize:vertical"></textarea>
+            <button style="background:#E4341C;color:#FFFBF4;border:0;padding:17px;font-weight:800;font-size:16px;cursor:pointer" style-hover="background:#1C1917">Send enquiry</button>
+            <div style="font-weight:600;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8A7C6C;line-height:1.6">We reply within one working day on +91 8866 911 100</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section style="max-width:1360px;margin:0 auto;padding:80px 32px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+        <sc-for list="{{ partnerPoints }}" as="p" hint-placeholder-count="6">
+          <div style="background:{{ p.bg }};color:{{ p.fg }};padding:32px 28px 36px">
+            <div style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:800;font-size:26px;line-height:1;margin-bottom:16px;opacity:.75">{{ p.no }}</div>
+            <div style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:700;font-size:22px;line-height:1.1;letter-spacing:-.02em;margin-bottom:11px">{{ p.title }}</div>
+            <div style="font-size:15px;font-weight:500;line-height:1.65">{{ p.body }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+  </main>
+  </sc-if>
+
+  <!-- ============ RECIPES ============ -->
+  <sc-if value="{{ isRecipes }}" hint-placeholder-val="{{ false }}">
+  <main>
+    <section style="background:#E4341C;color:#FFFBF4">
+      <div style="max-width:1360px;margin:0 auto;padding:80px 32px 72px">
+        <div style="font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#FFB703;margin-bottom:24px">Recipes &amp; kitchen notes</div>
+        <h1 style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:800;font-size:clamp(40px,5.6vw,78px);line-height:.96;letter-spacing:-.04em;margin:0 0 20px;max-width:22ch">Cook with the masala, not around it.</h1>
+        <p style="font-size:18px;font-weight:500;line-height:1.7;margin:0;max-width:54ch;color:rgba(255,251,244,.92)">Short, tested recipes built on our own blends — plus notes on how to store, roast and actually taste a spice.</p>
+      </div>
+    </section>
+    <div style="max-width:1360px;margin:0 auto;padding:48px 32px 80px">
+      <div style="display:flex;gap:9px;flex-wrap:wrap;margin-bottom:40px;font-weight:700;font-size:13px">
+        <span style="background:#1C1917;color:#FFFBF4;padding:11px 20px;white-space:nowrap;cursor:pointer">All</span>
+        <span style="border:1px solid rgba(28,25,23,.28);padding:10px 20px;white-space:nowrap;cursor:pointer">Everyday sabzi</span>
+        <span style="border:1px solid rgba(28,25,23,.28);padding:10px 20px;white-space:nowrap;cursor:pointer">Non-veg</span>
+        <span style="border:1px solid rgba(28,25,23,.28);padding:10px 20px;white-space:nowrap;cursor:pointer">Street food</span>
+        <span style="border:1px solid rgba(28,25,23,.28);padding:10px 20px;white-space:nowrap;cursor:pointer">Spice know-how</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+        <sc-for list="{{ recipes6 }}" as="r" hint-placeholder-count="6">
+          <a href="#" onClick="{{ noop }}" style="display:block;background:#fff;border:1px solid rgba(28,25,23,.14);color:#1C1917" style-hover="border:1px solid #E4341C">
+            <div style="aspect-ratio:4/3;background:#F0E6D6;display:flex;align-items:flex-end;padding:18px">
+              <span style="font-weight:600;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8A7C6C;line-height:1.5">{{ r.shot }}</span>
+            </div>
+            <div style="padding:22px;border-top:1px solid rgba(28,25,23,.1)">
+              <div style="font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#E4341C;margin-bottom:11px">{{ r.meta }}</div>
+              <div style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:700;font-size:22px;line-height:1.1;letter-spacing:-.02em;margin-bottom:11px">{{ r.title }}</div>
+              <div style="font-size:15px;font-weight:500;line-height:1.6;color:#5A5048">{{ r.body }}</div>
+            </div>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+  </main>
+  </sc-if>
+
+  <!-- ============ CONTACT ============ -->
+  <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+  <main style="max-width:1360px;margin:0 auto;padding:56px 32px 80px">
+    <h1 style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:800;font-size:clamp(40px,5.6vw,78px);line-height:.96;letter-spacing:-.04em;margin:0 0 48px">Reach us</h1>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:56px;align-items:start">
+      <div style="min-width:0">
+        <div style="border-top:1px solid rgba(28,25,23,.16)">
+          <sc-for list="{{ contactRows }}" as="c" hint-placeholder-count="4">
+            <div style="padding:24px 0;border-bottom:1px solid rgba(28,25,23,.14)">
+              <div style="font-weight:800;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#E4341C;margin-bottom:11px">{{ c.label }}</div>
+              <div style="font-size:19px;font-weight:600;line-height:1.5">{{ c.value }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="aspect-ratio:16/10;margin-top:32px;background:#F0E6D6;border:1px solid rgba(28,25,23,.16);display:flex;align-items:flex-end;padding:20px">
+          <span style="font-weight:600;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8A7C6C">Embedded map — 4/4 Industrial Estate, Gorwa, Vadodara</span>
+        </div>
+      </div>
+      <div class="v4-ph-light" style="min-width:0;background:#1C1917;color:#FFFBF4;padding:40px 36px">
+        <div style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:700;font-size:30px;letter-spacing:-.025em;margin-bottom:12px">Write to us</div>
+        <p style="font-size:16px;font-weight:500;line-height:1.65;color:#B8ADA2;margin:0 0 28px">Order queries, bulk enquiries, or a spice question — we answer all of them.</p>
+        <div style="display:grid;gap:12px">
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+            <input placeholder="Name" style="width:100%;min-width:0;border:1px solid rgba(255,251,244,.28);background:transparent;padding:14px 15px;font-size:15px;font-weight:500;color:#FFFBF4" />
+            <input placeholder="Phone" style="width:100%;min-width:0;border:1px solid rgba(255,251,244,.28);background:transparent;padding:14px 15px;font-size:15px;font-weight:500;color:#FFFBF4" />
+          </div>
+          <input placeholder="Email" style="width:100%;min-width:0;border:1px solid rgba(255,251,244,.28);background:transparent;padding:14px 15px;font-size:15px;font-weight:500;color:#FFFBF4" />
+          <input placeholder="Order number (if any)" style="width:100%;min-width:0;border:1px solid rgba(255,251,244,.28);background:transparent;padding:14px 15px;font-size:15px;font-weight:500;color:#FFFBF4" />
+          <textarea placeholder="Your message" rows="5" style="width:100%;min-width:0;border:1px solid rgba(255,251,244,.28);background:transparent;padding:14px 15px;font-size:15px;font-weight:500;color:#FFFBF4;resize:vertical"></textarea>
+          <button style="background:#FFB703;color:#1C1917;border:0;padding:17px;font-weight:800;font-size:16px;cursor:pointer" style-hover="background:#FFFBF4;color:#1C1917">Send message</button>
+        </div>
+      </div>
+    </div>
+  </main>
+  </sc-if>
+
+  <!-- ============ CART ============ -->
+  <sc-if value="{{ isCart }}" hint-placeholder-val="{{ false }}">
+  <main style="max-width:1360px;margin:0 auto;padding:56px 32px 80px">
+    <h1 style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:800;font-size:clamp(36px,4.8vw,62px);line-height:.98;letter-spacing:-.035em;margin:0 0 44px">Your cart</h1>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:48px;align-items:start">
+      <div style="min-width:0">
+        <div style="border-top:1px solid rgba(28,25,23,.16)">
+          <sc-for list="{{ cartItems }}" as="i" hint-placeholder-count="3">
+            <div style="display:grid;grid-template-columns:96px minmax(0,1fr) auto;gap:22px;padding:24px 0;border-bottom:1px solid rgba(28,25,23,.14);align-items:center">
+              <div style="aspect-ratio:1/1;background:#FFF0D4;border:1px solid rgba(28,25,23,.12);display:flex;align-items:center;justify-content:center;padding:10px">
+                <div role="img" aria-label="{{ i.name }}" style="flex:1;align-self:stretch;background-image:{{ i.imgBg }};background-size:contain;background-repeat:no-repeat;background-position:center"></div>
+              </div>
+              <div>
+                <div style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:700;font-size:21px;line-height:1.1;letter-spacing:-.02em;margin-bottom:8px">{{ i.name }}</div>
+                <div style="font-weight:600;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8A7C6C;margin-bottom:12px">{{ i.size }}</div>
+                <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+                  <div style="display:flex;align-items:center;border:1px solid rgba(28,25,23,.28)">
+                    <span style="padding:8px 13px;cursor:pointer;font-weight:800">−</span>
+                    <span style="padding:8px 4px;min-width:24px;text-align:center;font-weight:800">{{ i.qty }}</span>
+                    <span style="padding:8px 13px;cursor:pointer;font-weight:800">+</span>
+                  </div>
+                  <span style="font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#E4341C;cursor:pointer">Remove</span>
+                </div>
+              </div>
+              <div style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:800;font-size:22px">{{ i.total }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <a href="#" onClick="{{ goShop }}" style="display:inline-block;margin-top:28px;border:2px solid #1C1917;color:#1C1917;padding:14px 26px;font-weight:800;font-size:15px" style-hover="background:#1C1917;color:#FFFBF4">← Continue shopping</a>
+      </div>
+      <div style="min-width:0;background:#E4341C;color:#FFFBF4;padding:36px 32px">
+        <div style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:700;font-size:28px;letter-spacing:-.025em;margin-bottom:24px">Order summary</div>
+        <div style="display:flex;flex-direction:column;gap:13px;font-size:16px;font-weight:600;padding-bottom:20px;border-bottom:1px solid rgba(255,251,244,.32)">
+          <div style="display:flex;justify-content:space-between"><span>Subtotal</span><span>₹430</span></div>
+          <div style="display:flex;justify-content:space-between"><span>Shipping</span><span style="color:#FFB703">Free</span></div>
+          <div style="display:flex;justify-content:space-between"><span>Combo saving</span><span style="color:#FFB703">−₹85</span></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:22px 0 24px">
+          <span style="font-weight:800;font-size:12px;letter-spacing:.14em;text-transform:uppercase">Total</span>
+          <span style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:800;font-size:44px;line-height:1;color:#FFB703">₹345</span>
+        </div>
+        <div style="display:flex;gap:9px;margin-bottom:16px;flex-wrap:wrap">
+          <input placeholder="Coupon code" style="flex:1;min-width:130px;border:1px solid rgba(255,251,244,.4);background:#FFFBF4;padding:13px 14px;font-size:14px;font-weight:500;color:#1C1917" />
+          <button style="border:1px solid rgba(255,251,244,.5);background:transparent;padding:13px 22px;font-weight:800;font-size:14px;cursor:pointer" style-hover="background:#FFFBF4;color:#E4341C">Apply</button>
+        </div>
+        <button style="width:100%;background:#FFB703;color:#1C1917;border:0;padding:18px;font-weight:800;font-size:17px;cursor:pointer" style-hover="background:#1C1917;color:#FFB703">Checkout — ₹345</button>
+        <div style="font-weight:600;font-size:11px;letter-spacing:.1em;text-transform:uppercase;line-height:1.8;margin-top:16px;color:rgba(255,251,244,.85)">UPI · Cards · Netbanking · Cash on delivery</div>
+      </div>
+    </div>
+  </main>
+  </sc-if>
+
+  <footer style="background:#1C1917;color:#B8ADA2;border-top:4px solid #E4341C">
+    <div style="max-width:1360px;margin:0 auto;padding:64px 32px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:44px">
+      <div>
+        <div style="background:#FFFBF4;display:inline-block;padding:12px 14px;margin-bottom:22px">
+          <img src="uploads/Home-Queen-Logo-R-1.webp" alt="Home Queen" style="height:46px;width:auto;display:block" />
+        </div>
+        <p style="font-size:15px;font-weight:500;line-height:1.7;margin:0 0 18px;max-width:36ch">A product of RKR Foods. Spices ground, blended and packed at 4/4 Industrial Estate, Gorwa, Vadodara, Gujarat 390016.</p>
+        <div style="font-family:'Bricolage Grotesque',Figtree,sans-serif;font-weight:700;font-size:18px;line-height:1.5;color:#FFB703">+91 8866 911 100<br />info@homequeenspices.com</div>
+      </div>
+      <div>
+        <div style="font-weight:800;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#FFB703;margin-bottom:20px">Shop</div>
+        <div style="display:flex;flex-direction:column;gap:11px;font-size:15px;font-weight:500">
+          <a href="#" onClick="{{ goShop }}" style="color:#B8ADA2" style-hover="color:#FFFBF4">Basic Spices</a>
+          <a href="#" onClick="{{ goShop }}" style="color:#B8ADA2" style-hover="color:#FFFBF4">Veg Masalas</a>
+          <a href="#" onClick="{{ goShop }}" style="color:#B8ADA2" style-hover="color:#FFFBF4">Non-Veg Masalas</a>
+          <a href="#" onClick="{{ goShopKits }}" style="color:#B8ADA2" style-hover="color:#FFFBF4">Combo Kits</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-weight:800;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#FFB703;margin-bottom:20px">Company</div>
+        <div style="display:flex;flex-direction:column;gap:11px;font-size:15px;font-weight:500">
+          <a href="#" onClick="{{ goAbout }}" style="color:#B8ADA2" style-hover="color:#FFFBF4">Our Story</a>
+          <a href="#" onClick="{{ goPartner }}" style="color:#B8ADA2" style-hover="color:#FFFBF4">Partner With Us</a>
+          <a href="#" onClick="{{ goRecipes }}" style="color:#B8ADA2" style-hover="color:#FFFBF4">Recipes</a>
+          <a href="#" onClick="{{ goContact }}" style="color:#B8ADA2" style-hover="color:#FFFBF4">Reach Us</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-weight:800;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#FFB703;margin-bottom:20px">Policies</div>
+        <div style="display:flex;flex-direction:column;gap:11px;font-size:15px;font-weight:500">
+          <a href="#" onClick="{{ noop }}" style="color:#B8ADA2" style-hover="color:#FFFBF4">Shipping Policy</a>
+          <a href="#" onClick="{{ noop }}" style="color:#B8ADA2" style-hover="color:#FFFBF4">Refund Policy</a>
+          <a href="#" onClick="{{ noop }}" style="color:#B8ADA2" style-hover="color:#FFFBF4">Terms &amp; Conditions</a>
+          <a href="#" onClick="{{ noop }}" style="color:#B8ADA2" style-hover="color:#FFFBF4">Privacy Policy</a>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1360px;margin:0 auto;padding:22px 32px 44px;border-top:1px solid rgba(255,251,244,.12);display:flex;justify-content:space-between;gap:22px;flex-wrap:wrap;font-weight:600;font-size:11px;letter-spacing:.1em;text-transform:uppercase">
+      <span>© 2026 RKR Foods · FSSAI Lic. 0000000000000</span>
+      <span style="color:#FFB703">Har ghar mein swad bharde</span>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440},&quot;autoplaySeconds&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:6,&quot;min&quot;:3,&quot;max&quot;:12,&quot;step&quot;:1,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Hero banner&quot;},&quot;transition&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Fade&quot;,&quot;Slide&quot;],&quot;default&quot;:&quot;Fade&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Hero banner&quot;},&quot;hero1Image&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Hero photos (optional)&quot;},&quot;hero2Image&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Hero photos (optional)&quot;},&quot;hero3Image&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Hero photos (optional)&quot;},&quot;hero4Image&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Hero photos (optional)&quot;}}">
+class Component extends DCLogic {
+  state = { page: "home", slide: 0, paused: false };
+  heroTo(i) { const n = 4; this.setState({ slide: ((i % n) + n) % n }); }
+  buildSlides(u, go) {
+    const P = this.props || {};
+    const base = [
+      { tab: "Our mill", eyebrow: "Har ghar mein swad bharde", h1a: "Real masala, ground in", h1b: "our own mill.",
+        body: "26 spices and masalas from one family-run unit in Vadodara. Mixed, ground and sealed by us since 1987 — never outsourced, never dyed.",
+        price: "Free shipping above ₹249", cta1: "Shop all 26 →", go1: go.shop, cta2: "See the mill", go2: go.about,
+        pack: u("HQSP - Kitchen E Bahar.png"), photo: P.hero1Image,
+        bg: "#E4341C", fg: "#FFFBF4", accentText: "#FFB703", btnBg: "#FFB703", btnFg: "#1C1917", dot: "#FFB703",
+        deco: "#D42A12", deco2: "rgba(255,183,3,.16)", pillBg: "rgba(255,251,244,.14)", line: "rgba(255,251,244,.5)", track: "rgba(255,251,244,.3)" },
+      { tab: "Kashmiri Chilli", eyebrow: "Bestseller · Kashmiri Chilli", h1a: "Deep red.", h1b: "Zero dye.",
+        body: "Whole Kashmiri chillies, stalks removed by hand and ground fine. The colour in your gravy comes from the chilli — nothing else.",
+        price: "From ₹60 · 100 g to 1 kg", cta1: "Shop Kashmiri Chilli →", go1: go.product, cta2: "All basic spices", go2: go.shop,
+        pack: u("HQSP - Kashmiri Chilli.png"), photo: P.hero2Image,
+        bg: "#1C1917", fg: "#FFFBF4", accentText: "#FF5A3C", btnBg: "#E4341C", btnFg: "#FFFBF4", dot: "#E4341C",
+        deco: "#2A2420", deco2: "rgba(228,52,28,.2)", pillBg: "rgba(255,251,244,.08)", line: "rgba(255,251,244,.4)", track: "rgba(255,251,244,.24)" },
+      { tab: "Kitchen kits", eyebrow: "Kitchen kits · Save up to 20%", h1a: "The whole shelf,", h1b: "in one box.",
+        body: "Six to fourteen spices and masalas in a single kit. For a new home, a hostel kitchen, or a gift that actually gets used.",
+        price: "Kits from ₹230", cta1: "Shop kits →", go1: go.kits, cta2: "Kitchen E Bahar · ₹950", go2: go.product,
+        pack: u("HQSP - Curry Spice Kit.png"), photo: P.hero3Image,
+        bg: "#FFB703", fg: "#1C1917", accentText: "#A81E0A", btnBg: "#1C1917", btnFg: "#FFB703", dot: "#E4341C",
+        deco: "#F5AC00", deco2: "rgba(228,52,28,.12)", pillBg: "rgba(28,25,23,.08)", line: "rgba(28,25,23,.45)", track: "rgba(28,25,23,.2)" },
+      { tab: "Since 1987", eyebrow: "Since 1987 · Vadodara", h1a: "39 years.", h1b: "One family mill.",
+        body: "Ravneet Kaur Anand started RKR Foods in 1987. Every Home Queen blend is still mixed and ground on the same floor in Gorwa.",
+        price: "FSSAI licensed unit", cta1: "Read our story →", go1: go.about, cta2: "Become a partner", go2: go.partner,
+        pack: u("HQSP - Cumin Coriander.png"), photo: P.hero4Image,
+        bg: "#167D4E", fg: "#FFFBF4", accentText: "#FFB703", btnBg: "#FFB703", btnFg: "#1C1917", dot: "#FFB703",
+        deco: "#127044", deco2: "rgba(255,183,3,.16)", pillBg: "rgba(255,251,244,.12)", line: "rgba(255,251,244,.5)", track: "rgba(255,251,244,.3)" }
+    ];
+    const a = this.state.slide, secs = Math.max(2, Number(P.autoplaySeconds) || 6);
+    const slideMode = P.transition === "Slide";
+    return base.map((s, i) => {
+      const on = i === a;
+      const photo = s.photo && String(s.photo).trim() ? String(s.photo).trim() : null;
+      const t = photo ? { fg: "#FFFBF4", accentText: "#FFB703", btnBg: "#FFB703", btnFg: "#1C1917", line: "rgba(255,251,244,.55)", track: "rgba(255,251,244,.3)", pillBg: "rgba(20,14,10,.35)" } : {};
+      return Object.assign({}, s, t, {
+        photo, noPhoto: !photo, photoBg: photo ? 'url("' + photo.replace(/"/g, '%22') + '")' : "none", no: String(i + 1).padStart(2, "0"), aria: (i + 1) + " of 4: " + s.tab,
+        hidden: on ? "false" : "true", z: on ? 3 : 1, pe: on ? "auto" : "none",
+        op: slideMode ? 1 : (on ? 1 : 0),
+        shift: slideMode ? "translateX(" + ((i - a) * 100) + "%)" : "none",
+        textOp: on ? 1 : 0, textY: on ? "translateY(0)" : "translateY(28px)",
+        packOp: on ? 1 : 0, packT: on ? "translateY(0) scale(1)" : "translateY(24px) scale(.92)",
+        kb: on ? "scale(1)" : "scale(1.08)",
+        barT: i < a ? "scaleX(1)" : "scaleX(0)",
+        barAnim: on ? "v4bar " + secs + "s linear forwards" : "none",
+        labelOp: on ? 1 : .6,
+        pick: (e) => { if (e) e.preventDefault(); this.heroTo(i); }
+      });
+    });
+  }
+  go(p) { return (e) => { if (e) e.preventDefault(); this.setState({ page: p }); window.scrollTo(0, 0); }; }
+  renderVals() {
+    const v = this._vals();
+    const bg = (x) => x ? 'url("' + String(x).replace(/"/g, '%22') + '")' : "none";
+    ["categories", "bestsellers", "catalogue", "cartItems"].forEach(k => { v[k] = v[k].map(o => Object.assign({}, o, { imgBg: bg(o.img) })); });
+    v.slides = v.slides.map(s => Object.assign({}, s, { packBg: bg(s.pack) }));
+    return v;
+  }
+  _vals() {
+    const p = this.state.page;
+    const u = (n) => "uploads/" + encodeURIComponent(n);
+    const INK = "#1C1917", CREAM = "#FFFBF4", RED = "#E4341C", AMB = "#FFB703", GRN = "#167D4E";
+    return {
+      isHome: p === "home", notHome: p !== "home",
+      isShop: p === "shop" || p === "kits", isProduct: p === "product",
+      isAbout: p === "about", isPartner: p === "partner", isRecipes: p === "recipes",
+      isContact: p === "contact", isCart: p === "cart",
+      goHome: this.go("home"), goShop: this.go("shop"), goShopKits: this.go("kits"),
+      goProduct: this.go("product"), goAbout: this.go("about"), goPartner: this.go("partner"),
+      goRecipes: this.go("recipes"), goContact: this.go("contact"), goCart: this.go("cart"),
+      noop: (e) => { if (e) e.preventDefault(); },
+      ...(() => {
+        const slides = this.buildSlides(u, { shop: this.go("shop"), kits: this.go("kits"), product: this.go("product"), about: this.go("about"), partner: this.go("partner") });
+        const cur = slides[this.state.slide];
+        return {
+          slides,
+          uiFg: cur.fg, uiLine: cur.line, uiTrack: cur.track, uiBtnBg: cur.btnBg, uiBtnFg: cur.btnFg,
+          counter: cur.no, total: "04",
+          playState: this.state.paused ? "paused" : "running",
+          onBarEnd: () => this.heroTo(this.state.slide + 1),
+          heroNext: () => this.heroTo(this.state.slide + 1),
+          heroPrev: () => this.heroTo(this.state.slide - 1),
+          heroPause: () => this.setState({ paused: true }),
+          heroPlay: () => this.setState({ paused: false })
+        };
+      })(),
+
+      heroFacts: [
+        { big: "1987", label: "Grinding since" },
+        { big: "26", label: "Products" },
+        { big: "0", label: "Added colour" }
+      ],
+      categories: [
+        { name: "Basic Spices", meta: "8 products · ₹40–500", img: u("HQSP - Kashmiri Chilli.png"), bg: AMB, fg: INK },
+        { name: "Veg Masalas", meta: "8 products · ₹50–80", img: u("HQSP - Cumin Coriander.png"), bg: GRN, fg: CREAM },
+        { name: "Non-Veg Masalas", meta: "2 products · ₹50", img: u("HQSP - Meat Masala.png"), bg: RED, fg: CREAM },
+        { name: "Combo Kits", meta: "8 kits · ₹230–950", img: u("HQSP - Curry Spice Kit.png"), bg: INK, fg: AMB }
+      ],
+      bestsellers: [
+        { name: "Kashmiri Chilli", sizes: "100 g – 1 kg", price: "₹60", was: "₹80", badge: "Deep colour", img: u("HQSP - Kashmiri Chilli.png"), bg: "#FFF0D4" },
+        { name: "Cumin Coriander", sizes: "100 g / 200 g / 500 g", price: "₹45", was: "₹60", badge: "Bestseller", img: u("HQSP - Cumin Coriander.png"), bg: "#FFE7C2" },
+        { name: "Meat Masala", sizes: "100 g", price: "₹50", was: "₹60", badge: "In-house blend", img: u("HQSP - Meat Masala.png"), bg: "#FFDCD2" },
+        { name: "Amchur Masala", sizes: "100 g", price: "₹90", was: "₹120", badge: "Tangy", img: u("Amchur Masala.png"), bg: "#DCEDDF" }
+      ],
+      promises: [
+        { no: "01", title: "One unit, no outsourcing", body: "Every gram is blended in our Gorwa facility. No contract blenders." },
+        { no: "02", title: "Nothing added for colour", body: "The shade in the pack comes from the spice, not from dye." },
+        { no: "03", title: "Ultra-fine grinding", body: "Consistent particle size, so flavour releases evenly in the pan." },
+        { no: "04", title: "Sealed the same day", body: "Ground and packed on automated lines to hold the oils and aroma." },
+        { no: "05", title: "Reachable people", body: "Support on call, seven days, from the team that makes it." }
+      ],
+      shopFilters: [
+        { name: "Basic Spices", count: "08" }, { name: "Veg Masalas", count: "08" },
+        { name: "Non-Veg Masalas", count: "02" }, { name: "Combo Kits", count: "08" },
+        { name: "Ready Mixes", count: "01" }
+      ],
+      catalogue: [
+        { name: "Kashmiri Chilli", cat: "Basic", sizes: "100 g – 1 kg", price: "₹60", was: "₹80", img: u("HQSP - Kashmiri Chilli.png"), bg: "#FFF0D4" },
+        { name: "Cumin Coriander", cat: "Basic", sizes: "100 g / 200 g / 500 g", price: "₹45", was: "₹60", img: u("HQSP - Cumin Coriander.png"), bg: "#FFE7C2" },
+        { name: "Amchur Masala", cat: "Basic", sizes: "100 g", price: "₹90", was: "₹120", img: u("Amchur Masala.png"), bg: "#DCEDDF" },
+        { name: "Meat Masala", cat: "Non-Veg", sizes: "100 g", price: "₹50", was: "₹60", img: u("HQSP - Meat Masala.png"), bg: "#FFDCD2" },
+        { name: "Curry Spice Kit", cat: "Kit", sizes: "6-spice kit", price: "₹230", was: "₹290", img: u("HQSP - Curry Spice Kit.png"), bg: "#FFF0D4" },
+        { name: "Non-Veg Spice Kit", cat: "Kit", sizes: "5-spice kit", price: "₹260", was: "₹325", img: u("HQSP - Non-Veg Spice Kit.png"), bg: "#FFDCD2" },
+        { name: "Kitchen E Bahar", cat: "Kit", sizes: "14-spice kit", price: "₹950", was: "₹1,185", img: u("HQSP - Kitchen E Bahar.png"), bg: "#DCEDDF" },
+        { name: "Turmeric Powder", cat: "Basic", sizes: "100 g / 200 g / 500 g", price: "₹45", was: "₹60", bg: "#FFF0D4" },
+        { name: "Coriander Powder", cat: "Basic", sizes: "100 g / 200 g / 500 g", price: "₹40", was: "₹55", bg: "#FFE7C2" },
+        { name: "Garam Masala", cat: "Veg", sizes: "100 g", price: "₹50", was: "₹60", bg: "#FFDCD2" },
+        { name: "Pav Bhaji Masala", cat: "Veg", sizes: "100 g", price: "₹50", was: "₹60", bg: "#DCEDDF" },
+        { name: "Tea Masala", cat: "Basic", sizes: "50 g", price: "₹70", was: "₹80", bg: "#FFF0D4" }
+      ],
+      variants: [
+        { size: "100 g", price: "₹60" }, { size: "200 g", price: "₹110" },
+        { size: "500 g", price: "₹255" }, { size: "1 kg", price: "₹480" }
+      ],
+      accordions: [
+        { title: "Ingredients", body: "100% ground Kashmiri chilli (Capsicum annuum). Nothing else — no starch, no colour, no anti-caking agent." },
+        { title: "How to use", body: "Add to hot oil early so the colour bleeds into the masala. Use it wherever you want red without heat." },
+        { title: "Storage & shelf life", body: "Best within 12 months of packing. Keep the pack sealed, away from heat and direct sunlight." },
+        { title: "Shipping & returns", body: "Dispatched within 24 hours from Vadodara. Free shipping above ₹249. Damaged or wrong items replaced free." }
+      ],
+      timeline: [
+        { year: "1987", title: "RKR Foods begins", body: "Ravneet Kaur Anand leaves insurance underwriting and sets up a small grinding operation in Vadodara." },
+        { year: "1990s", title: "The Gorwa unit", body: "Production moves to 4/4 Industrial Estate, Gorwa — still the address printed on every pack today." },
+        { year: "2000s", title: "Blends of our own", body: "Garam masala, kitchen king, sambhar and pav bhaji blends are formulated in-house rather than bought in." },
+        { year: "2010s", title: "Home Queen on the shelf", body: "The retail brand takes its name and its tagline: har ghar mein swad bharde." },
+        { year: "Today", title: "26 SKUs, direct to you", body: "Basic spices, veg and non-veg masalas, ready mixes and kits — online and through retail across India." }
+      ],
+      process: [
+        { no: "01", title: "Sourcing", body: "Whole spice bought by lot and checked before it enters the unit.", shot: "Image 03 — sacks of whole spice at intake" },
+        { no: "02", title: "Cleaning & drying", body: "Stones, stalks and dust removed; moisture brought down to grinding level.", shot: "Image 04 — cleaning and sorting line" },
+        { no: "03", title: "Ultra-fine grinding", body: "Ground cool, then sieved to a consistent particle size.", shot: "Image 05 — grinder and sieve in motion" },
+        { no: "04", title: "Blending & sealing", body: "Blended to recipe, then filled and heat-sealed the same day.", shot: "Image 06 — packing line, sealed pouches" }
+      ],
+      partnerPoints: [
+        { no: "01", title: "Manufacturer-direct pricing", body: "You buy from the unit that grinds it, so the margin stays with you.", bg: AMB, fg: INK },
+        { no: "02", title: "39 years of consistency", body: "Same recipes, same facility, lot-to-lot repeatability your customers notice.", bg: GRN, fg: CREAM },
+        { no: "03", title: "Full range in one order", body: "26 SKUs across basic spices, veg and non-veg masalas, ready mixes and gift kits.", bg: RED, fg: CREAM },
+        { no: "04", title: "Display-ready packs", body: "Hanging strips and counter units that fit a kirana shelf without rework.", bg: INK, fg: AMB },
+        { no: "05", title: "Dispatch from Vadodara", body: "Direct freight across Gujarat and onward to the rest of India.", bg: RED, fg: CREAM },
+        { no: "06", title: "A named contact", body: "One person on your account, reachable by phone during working hours.", bg: AMB, fg: INK }
+      ],
+      recipes3: [
+        { title: "Pav bhaji, Vadodara stall style", meta: "Street food · 35 min", shot: "Image 07 — bhaji on the tawa with buttered pav" },
+        { title: "Everyday aloo sabzi with cumin coriander", meta: "Everyday sabzi · 20 min", shot: "Image 08 — sabzi in a steel kadai" },
+        { title: "Paneer tikka without a tandoor", meta: "Starter · 40 min", shot: "Image 09 — charred paneer skewers" }
+      ],
+      recipes6: [
+        { title: "Pav bhaji, Vadodara stall style", meta: "Street food · 35 min", body: "Butter, mash and our pav bhaji masala. Nothing clever.", shot: "Image 07 — bhaji on the tawa with buttered pav" },
+        { title: "Everyday aloo sabzi with cumin coriander", meta: "Everyday sabzi · 20 min", body: "The one-pan sabzi that gets made four nights a week.", shot: "Image 08 — sabzi in a steel kadai" },
+        { title: "Paneer tikka without a tandoor", meta: "Starter · 40 min", body: "A hot pan and a high flame do most of the work.", shot: "Image 09 — charred paneer skewers" },
+        { title: "Home-style meat curry, no shortcuts", meta: "Non-veg · 55 min", body: "Meat masala, onions cooked properly, and patience.", shot: "Image 10 — curry in a handi" },
+        { title: "Why roasting cumin changes everything", meta: "Spice know-how · 4 min read", body: "What heat does to cumin, and when to stop.", shot: "Image 11 — cumin roasting in a pan" },
+        { title: "Masala chai, measured properly", meta: "Spice know-how · 10 min", body: "How much tea masala per cup, and when to add it.", shot: "Image 12 — chai poured into a glass" }
+      ],
+      contactRows: [
+        { label: "Manufacturing unit", value: "4/4 Industrial Estate, Gorwa, Vadodara, Gujarat 390016, India" },
+        { label: "Phone", value: "+91 8866 911 100" },
+        { label: "Email", value: "info@homequeenspices.com" },
+        { label: "Support hours", value: "Monday to Saturday, 9:30 am – 7:00 pm IST" }
+      ],
+      cartItems: [
+        { name: "Kashmiri Chilli", size: "100 g pack", qty: 1, total: "₹60", img: u("HQSP - Kashmiri Chilli.png") },
+        { name: "Cumin Coriander", size: "200 g pack", qty: 2, total: "₹140", img: u("HQSP - Cumin Coriander.png") },
+        { name: "Curry Spice Kit", size: "6-spice kit", qty: 1, total: "₹230", img: u("HQSP - Curry Spice Kit.png") }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
