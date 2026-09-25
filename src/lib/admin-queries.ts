@@ -14,10 +14,10 @@ export function orderWhere(sp: Record<string, string | undefined>): Prisma.Order
   const q = sp.q?.trim();
   if (q) {
     where.OR = [
-      { number: { contains: q.toUpperCase() } },
-      { shipName: { contains: q } },
+      { number: { contains: q, mode: "insensitive" } },
+      { shipName: { contains: q, mode: "insensitive" } },
       { shipPhone: { contains: q } },
-      { user: { email: { contains: q.toLowerCase() } } },
+      { user: { email: { contains: q, mode: "insensitive" } } },
     ];
   }
   return where;

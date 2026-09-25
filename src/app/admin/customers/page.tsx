@@ -13,7 +13,7 @@ export default async function Customers({ searchParams }: { searchParams: Promis
   const page = Math.max(1, Number(sp.page) || 1);
   const where: Prisma.UserWhereInput = {};
   if (sp.role === "ADMIN" || sp.role === "CUSTOMER") where.role = sp.role;
-  if (sp.q) where.OR = [{ name: { contains: sp.q } }, { email: { contains: sp.q.toLowerCase() } }, { phone: { contains: sp.q } }];
+  if (sp.q) where.OR = [{ name: { contains: sp.q, mode: "insensitive" } }, { email: { contains: sp.q, mode: "insensitive" } }, { phone: { contains: sp.q } }];
 
   const [users, total] = await Promise.all([
     db.user.findMany({ where, orderBy: { createdAt: "desc" }, skip: (page - 1) * PER, take: PER }),

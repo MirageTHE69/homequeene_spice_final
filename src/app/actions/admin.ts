@@ -1,6 +1,7 @@
 "use server";
 
 import { mkdir, writeFile } from "fs/promises";
+import { put } from "@vercel/blob";
 import path from "path";
 import crypto from "crypto";
 import bcrypt from "bcryptjs";
@@ -28,7 +29,7 @@ const ALLOWED = new Map([
   ["image/avif", "avif"],
 ]);
 
-/** Saves an uploaded image to /public/uploads/products and returns its public URL. */
+/** Saves an uploaded image and returns its public URL: Vercel Blob in production, /public/uploads locally. */
 export async function uploadImage(fd: FormData): Promise<{ url?: string; error?: string }> {
   await requireAdmin();
   const file = fd.get("file");
@@ -36,9 +37,14 @@ export async function uploadImage(fd: FormData): Promise<{ url?: string; error?:
   const ext = ALLOWED.get(file.type);
   if (!ext) return { error: "Use a PNG, JPG, WEBP or AVIF image." };
   if (file.size > 5 * 1024 * 1024) return { error: "Image must be under 5 MB." };
+  const name = `${Date.now()}-${crypto.randomBytes(4).toString("hex")}.${ext}`;
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    const blob = await put(`products/${name}`, file, { access: "public", contentType: file.type });
+    return { url: blob.url };
+  }
+  if (process.env.VERCEL) return { error: "Image storage isn't connected. Connect a Vercel Blob store to this project." };
   const dir = path.join(process.cwd(), "public", "uploads", "products");
   await mkdir(dir, { recursive: true });
-  const name = `${Date.now()}-${crypto.randomBytes(4).toString("hex")}.${ext}`;
   await writeFile(path.join(dir, name), Buffer.from(await file.arrayBuffer()));
   return { url: `/uploads/products/${name}` };
 }

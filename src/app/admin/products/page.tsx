@@ -11,7 +11,7 @@ export const metadata = { title: "Products" };
 export default async function AdminProducts({ searchParams }: { searchParams: Promise<Record<string, string | undefined>> }) {
   const sp = await searchParams;
   const where: Prisma.ProductWhereInput = {};
-  if (sp.q) where.name = { contains: sp.q };
+  if (sp.q) where.name = { contains: sp.q, mode: "insensitive" };
   if (sp.category) where.categoryId = sp.category;
   if (sp.show === "hidden") where.active = false;
   if (sp.show === "live") where.active = true;

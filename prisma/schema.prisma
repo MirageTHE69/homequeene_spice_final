@@ -1,5 +1,6 @@
 // Home Queen Spices — data model.
-// SQLite for local dev; switch provider to "postgresql" for production.
+// Postgres (Prisma Postgres on Vercel). The app also accepts the Vercel-prefixed
+// homequeen_DATABASE_URL — see src/lib/db.ts.
 // Money values are stored as whole rupees (Int).
 
 generator client {
@@ -7,7 +8,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 

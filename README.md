@@ -4,9 +4,11 @@ A Next.js 15 e-commerce site built from the `claude-desing/Home Queen Revamp v4`
 
 ## Run it locally
 
+The database is Postgres (Prisma Postgres, connected through Vercel Storage). Put its connection string in `.env` as `DATABASE_URL`, then:
+
 ```bash
 npm install          # also generates the Prisma client
-npm run setup        # creates the SQLite database and loads products, recipes, demo orders
+npm run setup        # creates the tables and loads products, recipes, demo orders
 npm run dev          # http://localhost:3000
 ```
 
@@ -37,13 +39,14 @@ Stock is reserved when an order is placed and returned automatically when an ord
 - Lifestyle and recipe photography is from Unsplash (free for commercial use) — see `src/lib/stock.ts` and the recipe records. Replace them with your own photos from the mill whenever you have them.
 - Products without a pack photo yet (Turmeric, Coriander, Chilli Powder, Garam Masala, Kitchen King, Chat Masala, Chicken Masala) show a branded placeholder pack. Upload the real photo in **Admin → Products**.
 
-## Going to production
+## Hosting on Vercel
 
-1. **Database** — SQLite is for development. Switch to Postgres: in `prisma/schema.prisma` set `provider = "postgresql"`, set `DATABASE_URL` to your Postgres URL, then run `npx prisma db push` and `npm run db:seed` (or skip the seed and add products in the admin).
-2. **Environment** — copy `.env.example` to `.env` and set a long random `AUTH_SECRET` and `NEXT_PUBLIC_SITE_URL`.
-3. **Online payments** — add `RAZORPAY_KEY_ID` / `RAZORPAY_KEY_SECRET`. Without them the checkout offers Cash on Delivery only.
-4. **Image uploads** are saved to `public/uploads/products`, which works on a VPS or any server with a persistent disk. On serverless hosting (e.g. Vercel) switch `uploadImage` in `src/app/actions/admin.ts` to object storage such as S3, Cloudinary or Vercel Blob.
-5. `npm run build && npm start`.
+1. **Database** — Vercel Storage → Prisma Postgres, connected to the project. The app reads `DATABASE_URL`, or the prefixed `homequeen_DATABASE_URL` that Vercel creates (see `src/lib/db.ts`).
+2. **Image uploads** — Vercel Storage → Blob, connected to the project (provides `BLOB_READ_WRITE_TOKEN`). Without it, admin image upload shows an error on Vercel; pasting an image URL still works.
+3. **Environment variables** — `AUTH_SECRET` (long random string) and `NEXT_PUBLIC_SITE_URL` (your live address).
+4. **Online payments** — add `RAZORPAY_KEY_ID` / `RAZORPAY_KEY_SECRET`. Without them the checkout offers Cash on Delivery only.
+
+Pushing to `main` on GitHub redeploys automatically.
 
 Also replace the placeholder FSSAI licence number in `src/components/store/SiteFooter.tsx`, and have the policy text in `src/app/(store)/policies/[slug]/page.tsx` checked against how you actually operate.
 
