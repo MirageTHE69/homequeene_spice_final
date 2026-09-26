@@ -8,6 +8,9 @@ import { NAV, accountLink, UserIcon, type HeaderUser } from "./SiteHeader";
 type Slide = {
   tab: string; eyebrow: string; h1a: string; h1b: string; body: string; price: string;
   cta1: string; href1: string; cta2: string; href2: string; pack: string;
+  /** Mobile composition: [front, back-left, back-right] - transparent cut-out packs only. */
+  fan: [string, string, string];
+  stamp: [big: string, small: string];
   bg: string; fg: string; accentText: string; btnBg: string; btnFg: string; dot: string;
   deco: string; deco2: string; pillBg: string; line: string; track: string;
 };
@@ -17,24 +20,28 @@ const SLIDES: Slide[] = [
     body: "26 spices and masalas from one family-run unit in Vadodara. Mixed, ground and sealed by us since 1987 — never outsourced, never dyed.",
     price: "Free shipping above ₹249", cta1: "Shop all 26 →", href1: "/shop", cta2: "See the mill", href2: "/about",
     pack: "/images/products/kitchen-e-bahar.webp",
+    fan: ["/images/products/kashmiri-chilli.webp", "/images/products/cumin-coriander.png", "/images/products/amchur-masala.png"], stamp: ["0%", "added colour"],
     bg: "#E4341C", fg: "#FFFBF4", accentText: "#FFB703", btnBg: "#FFB703", btnFg: "#1C1917", dot: "#FFB703",
     deco: "#D42A12", deco2: "rgba(255,183,3,.16)", pillBg: "rgba(255,251,244,.14)", line: "rgba(255,251,244,.5)", track: "rgba(255,251,244,.3)" },
   { tab: "Kashmiri Chilli", eyebrow: "Bestseller · Kashmiri Chilli", h1a: "Deep red.", h1b: "Zero dye.",
     body: "Whole Kashmiri chillies, stalks removed by hand and ground fine. The colour in your gravy comes from the chilli — nothing else.",
     price: "From ₹60 · 100 g to 1 kg", cta1: "Shop Kashmiri Chilli →", href1: "/product/kashmiri-chilli", cta2: "All basic spices", href2: "/shop?category=basic-spices",
     pack: "/images/products/kashmiri-chilli.webp",
+    fan: ["/images/products/kashmiri-chilli.webp", "/images/products/black-pepper-powder.png", "/images/products/paneer-tikka-ready-mix.webp"], stamp: ["₹60", "from · 100 g"],
     bg: "#1C1917", fg: "#FFFBF4", accentText: "#FF5A3C", btnBg: "#E4341C", btnFg: "#FFFBF4", dot: "#E4341C",
     deco: "#2A2420", deco2: "rgba(228,52,28,.2)", pillBg: "rgba(255,251,244,.08)", line: "rgba(255,251,244,.4)", track: "rgba(255,251,244,.24)" },
   { tab: "Kitchen kits", eyebrow: "Kitchen kits · Save up to 20%", h1a: "The whole shelf,", h1b: "in one box.",
     body: "Six to fourteen spices and masalas in a single kit. For a new home, a hostel kitchen, or a gift that actually gets used.",
     price: "Kits from ₹230", cta1: "Shop kits →", href1: "/shop?category=combo-kits", cta2: "Kitchen E Bahar · ₹950", href2: "/product/kitchen-e-bahar",
     pack: "/images/products/curry-spice-kit.webp",
+    fan: ["/images/products/paneer-tikka-ready-mix.webp", "/images/products/amchur-masala.png", "/images/products/cumin-coriander.png"], stamp: ["20%", "off on kits"],
     bg: "#FFB703", fg: "#1C1917", accentText: "#A81E0A", btnBg: "#1C1917", btnFg: "#FFB703", dot: "#E4341C",
     deco: "#F5AC00", deco2: "rgba(228,52,28,.12)", pillBg: "rgba(28,25,23,.08)", line: "rgba(28,25,23,.45)", track: "rgba(28,25,23,.2)" },
   { tab: "Since 1987", eyebrow: "Since 1987 · Vadodara", h1a: "39 years.", h1b: "One family mill.",
     body: "Ravneet Kaur Anand started RKR Foods in 1987. Every Home Queen blend is still mixed and ground on the same floor in Gorwa.",
     price: "FSSAI licensed unit", cta1: "Read our story →", href1: "/about", cta2: "Become a partner", href2: "/partner",
     pack: "/images/products/cumin-coriander.png",
+    fan: ["/images/products/cumin-coriander.png", "/images/products/black-pepper-powder.png", "/images/products/kashmiri-chilli.webp"], stamp: ["1987", "since"],
     bg: "#167D4E", fg: "#FFFBF4", accentText: "#FFB703", btnBg: "#FFB703", btnFg: "#1C1917", dot: "#FFB703",
     deco: "#127044", deco2: "rgba(255,183,3,.16)", pillBg: "rgba(255,251,244,.12)", line: "rgba(255,251,244,.5)", track: "rgba(255,251,244,.3)" },
 ];
@@ -125,9 +132,19 @@ export function Hero({ user, productCount }: { user: HeaderUser; productCount: n
               aria-hidden={!on}
               style={{ background: s.bg, color: s.fg, opacity: on ? 1 : 0, zIndex: on ? 3 : 1, pointerEvents: on ? "auto" : "none" }}
             >
-              <div className="slide-deco" style={{ top: "-16%", right: "-8%", width: "min(64vw,900px)", aspectRatio: "1/1", background: s.deco }} />
-              <div className="slide-deco" style={{ bottom: "-26%", left: "-12%", width: "min(50vw,640px)", aspectRatio: "1/1", background: s.deco2 }} />
+              <div className="slide-deco deco-a" style={{ top: "-16%", right: "-8%", width: "min(64vw,900px)", aspectRatio: "1/1", background: s.deco }} />
+              <div className="slide-deco deco-b" style={{ bottom: "-26%", left: "-12%", width: "min(50vw,640px)", aspectRatio: "1/1", background: s.deco2 }} />
               <div className="wrap slide-inner">
+                <div className="slide-fan" aria-hidden>
+                  <div className="fan-stamp" style={{ background: s.btnBg, color: s.btnFg }}>
+                    <b>{s.stamp[0]}</b>
+                    <span>{s.stamp[1]}</span>
+                  </div>
+                  {s.fan.map((src, k) => (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img key={k} src={src} alt="" className={["fan-f", "fan-l", "fan-r"][k]} loading={i === 0 ? "eager" : "lazy"} />
+                  ))}
+                </div>
                 <div className="slide-copy" style={{ opacity: on ? 1 : 0, transform: on ? "translateY(0)" : "translateY(28px)" }}>
                   <div className="slide-pill" style={{ background: s.pillBg, borderColor: s.line }}>
                     <span className="dot" style={{ background: s.dot }} />
@@ -166,6 +183,12 @@ export function Hero({ user, productCount }: { user: HeaderUser; productCount: n
 
       <div className="hero-controls">
         <div className="wrap row">
+          <div className="hero-caption" aria-live="polite" style={{ color: cur.fg }}>
+            <span>{cur.tab}</span>
+            <span>
+              {String(active + 1).padStart(2, "0")} <span style={{ opacity: 0.55 }}>/ {String(n).padStart(2, "0")}</span>
+            </span>
+          </div>
           <div className="hero-tabs">
             {slides.map((s, i) => (
               <button key={s.tab} className="hero-tab" onClick={() => go(i)} aria-label={`${i + 1} of ${n}: ${s.tab}`} style={{ color: cur.fg }}>
@@ -176,7 +199,10 @@ export function Hero({ user, productCount }: { user: HeaderUser; productCount: n
                     style={{
                       background: cur.fg,
                       transform: i < active ? "scaleX(1)" : "scaleX(0)",
-                      animation: i === active ? `v4bar ${SECS}s linear forwards` : "none",
+                      animationName: i === active ? "v4bar" : "none",
+                      animationDuration: `${SECS}s`,
+                      animationTimingFunction: "linear",
+                      animationFillMode: "forwards",
                       animationPlayState: paused ? "paused" : "running",
                     }}
                   />
