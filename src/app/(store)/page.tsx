@@ -61,8 +61,10 @@ export default async function HomePage() {
             return (
               <Link key={c.id} href={`/shop?category=${c.slug}`} className="cat-tile" style={{ background: c.bg, color: c.fg }}>
                 <div className="pic">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  {c.image && <img src={c.image} alt={c.name} loading="lazy" />}
+                  <span className="stage">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    {c.image && <img src={c.image} alt={c.name} loading="lazy" />}
+                  </span>
                 </div>
                 <div className="meta">
                   <div className="name">{c.name}</div>

@@ -21,7 +21,9 @@ export function ProductCard({ p, badge = "badge", compact = false }: { p: CardPr
   return (
     <div className={`pcard ${compact ? "compact" : ""}`}>
       <Link href={`/product/${p.slug}`} className="pic" style={{ background: p.tileBg }} aria-label={p.name}>
-        <PackImage src={p.image} name={p.name} />
+        <span className="stage">
+          <PackImage src={p.image} name={p.name} />
+        </span>
         {label && <span className="badge">{label}</span>}
       </Link>
       <div className="body">

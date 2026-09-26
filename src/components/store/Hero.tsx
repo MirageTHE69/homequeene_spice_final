@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useCart } from "@/components/cart/CartProvider";
 import { NAV, accountLink, UserIcon, type HeaderUser } from "./SiteHeader";
 
@@ -45,6 +45,7 @@ export function Hero({ user, productCount }: { user: HeaderUser; productCount: n
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const [menu, setMenu] = useState(false);
+  const touchX = useRef<number | null>(null);
   const { count, ready } = useCart();
   const n = SLIDES.length;
   const go = useCallback((i: number) => setActive(((i % n) + n) % n), [n]);
@@ -69,6 +70,13 @@ export function Hero({ user, productCount }: { user: HeaderUser; productCount: n
       aria-label="Home Queen highlights"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
+      onTouchStart={(e) => (touchX.current = e.touches[0].clientX)}
+      onTouchEnd={(e) => {
+        if (touchX.current === null) return;
+        const dx = e.changedTouches[0].clientX - touchX.current;
+        touchX.current = null;
+        if (Math.abs(dx) > 50) go(active + (dx < 0 ? 1 : -1));
+      }}
     >
       <header className="hero-header" style={{ borderColor: cur.line, color: cur.fg }}>
         <div className="wrap bar">

@@ -149,24 +149,24 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
 /* ---------- Category tiles ---------- */
 .cat-tile { display: block; }
 .cat-tile:hover { opacity: 0.9; }
-.cat-tile .pic { aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; padding: 28px; }
-.cat-tile .pic img { width: 100%; height: 100%; object-fit: contain; }
+.cat-tile .pic { position: relative; aspect-ratio: 1 / 1; overflow: hidden; }
+.cat-tile .pic .stage { inset: 11%; }
 .cat-tile .meta { padding: 22px 24px 26px; border-top: 1px solid rgba(0, 0, 0, 0.14); }
 .cat-tile .name { font-family: var(--display); font-weight: 700; font-size: 24px; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 9px; }
 .cat-tile .sub { font-weight: 600; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.85; }
 
 /* ---------- Product card ---------- */
-.pcard { background: #fff; border: 1px solid var(--line); display: flex; flex-direction: column; transition: border-color 0.15s ease; color: var(--ink); }
+.pcard { background: #fff; border: 1px solid var(--line); display: flex; flex-direction: column; height: 100%; min-width: 0; transition: border-color 0.15s ease; color: var(--ink); }
 .pcard:hover { border-color: var(--red); }
-.pcard .pic { position: relative; aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; padding: 26px; }
-.pcard .pic img { width: 100%; height: 100%; object-fit: contain; display: block; transition: transform 0.4s ease; }
-.pcard:hover .pic img { transform: scale(1.03); }
+.pcard .pic { position: relative; display: block; aspect-ratio: 1 / 1; overflow: hidden; flex-shrink: 0; }
+.pcard .pic .stage { inset: 12% 14% 9%; transition: transform 0.4s ease; }
+.pcard:hover .pic .stage { transform: scale(1.04); }
 .pcard .badge { position: absolute; top: 12px; left: 12px; background: var(--ink); color: var(--amber); font-weight: 700; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 10px; }
 .pcard .wish { position: absolute; top: 8px; right: 8px; }
 .pcard .body { padding: 20px; display: flex; flex-direction: column; gap: 9px; flex: 1; border-top: 1px solid rgba(28, 25, 23, 0.1); }
-.pcard .name { font-family: var(--display); font-weight: 700; font-size: 21px; line-height: 1.1; letter-spacing: -0.02em; color: var(--ink); }
+.pcard .name { font-family: var(--display); font-weight: 700; font-size: 21px; line-height: 1.1; letter-spacing: -0.02em; color: var(--ink); min-height: 2.2em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .pcard .name:hover { color: var(--red); }
-.pcard .sizes { font-weight: 600; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted2); }
+.pcard .sizes { font-weight: 600; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .pcard .prices { display: flex; align-items: baseline; gap: 9px; margin-top: auto; padding-top: 8px; }
 .price-now { font-family: var(--display); font-weight: 800; font-size: 26px; color: var(--red); }
 .price-was { font-size: 14px; font-weight: 600; color: var(--strike); text-decoration: line-through; }
@@ -176,8 +176,13 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
 .pcard.compact .name { font-size: 19px; }
 .pcard.compact .price-now { font-size: 20px; }
 
+/* Fixed image stage: every pack shot is contained in the same box, whatever its proportions */
+.stage { position: absolute; display: flex; align-items: center; justify-content: center; }
+.stage > img { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; filter: drop-shadow(0 10px 14px rgba(60, 20, 0, 0.14)); }
+.stage > .pack-fallback { height: 100%; width: auto; aspect-ratio: 5 / 7; }
+
 /* Typographic fallback when a product has no pack shot yet */
-.pack-fallback { container-type: inline-size; width: 72%; height: 88%; max-width: 100%; max-height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 12% 8%; box-shadow: 0 18px 30px rgba(60, 20, 0, 0.18); text-align: center; overflow: hidden; }
+.pack-fallback { container-type: inline-size; width: 72%; height: 88%; max-width: 100%; max-height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: space-evenly; padding: 10% 8%; box-shadow: 0 18px 30px rgba(60, 20, 0, 0.18); text-align: center; overflow: hidden; }
 .pack-fallback .brand { background: var(--cream); color: var(--green); font-family: var(--display); font-weight: 800; font-size: clamp(6px, 9cqi, 14px); padding: 0.35em 0.7em; border-radius: 999px; border: 2px solid var(--red); white-space: nowrap; }
 .pack-fallback .pname { font-family: var(--display); font-weight: 800; font-size: clamp(7px, 15cqi, 26px); line-height: 1.02; letter-spacing: -0.02em; }
 .pack-fallback .pure { font-weight: 700; font-size: clamp(5px, 5.5cqi, 9px); letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.8; }
@@ -457,8 +462,8 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 14px; }
   .hero-tab .lbl { font-size: 10px; }
   .hero-tab .lbl b { margin-right: 4px; }
   .slide-inner { grid-template-columns: 1fr; padding-top: 110px; padding-bottom: 190px; gap: 12px; }
-  .slide-pack { min-height: 0; order: -1; }
-  .slide-pack img { height: 34vh; }
+  .slide-pack { min-height: 0; order: -1; justify-content: flex-end; margin-right: -4px; }
+  .slide-pack img { width: 64%; max-width: 300px; height: 30vh; object-position: right center; filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.35)); }
   .slide p { font-size: 17px; }
   .promise-panel, .pad-panel { padding: 36px 22px !important; }
   .pdp { grid-template-columns: 1fr; gap: 32px; }
@@ -473,13 +478,28 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 14px; }
   .tracker .step { border-top: 0; border-left: 4px solid rgba(28, 25, 23, 0.12); padding: 4px 0 4px 12px; }
 }
 @media (max-width: 520px) {
+  .slide-inner { padding-top: 96px; padding-bottom: 150px; gap: 4px; }
+  .slide-pack img { width: 58%; height: 24vh; }
+  .slide-pill { margin-bottom: 16px; padding: 6px 11px; }
+  .slide-pill span:last-child { font-size: 10px; letter-spacing: 0.1em; }
+  .slide h2 { font-size: clamp(36px, 11vw, 46px); margin-bottom: 16px; }
+  .slide p { font-size: 15px; line-height: 1.5; margin-bottom: 16px; }
+  .slide .price { font-size: 16px; margin-bottom: 18px; }
+  .slide .cta1, .slide .cta2 { padding: 14px 20px; font-size: 14px; }
+  .slide .cta2 { padding: 12px 20px; }
+  .hero-controls .row { padding-bottom: 14px; gap: 10px; }
+  .hero-arrows { justify-content: space-between; }
+  .hero-arrows button { width: 42px; height: 42px; font-size: 17px; }
   .grid-cards, .grid-fill { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-  .pcard .pic { padding: 14px; }
+  .pcard .pic .stage { inset: 10% 11% 8%; }
+  .pcard .badge { top: 8px; left: 8px; font-size: 9px; padding: 4px 7px; letter-spacing: 0.08em; }
   .pcard .body { padding: 12px; gap: 6px; }
   .pcard .name { font-size: 16px; }
+  .pcard .sizes { font-size: 10px; letter-spacing: 0.04em; }
+  .price-was { font-size: 12px; }
   .price-now { font-size: 20px; }
   .pcard .add { padding: 11px 6px; font-size: 12px; }
-  .cat-tile .pic { padding: 16px; }
+  .cat-tile .pic .stage { inset: 9%; }
   .cat-tile .meta { padding: 14px; }
   .cat-tile .name { font-size: 18px; }
   .cart-row { grid-template-columns: 72px minmax(0, 1fr); }
@@ -488,4 +508,11 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 14px; }
   .tl-row { grid-template-columns: 1fr; gap: 6px; }
   .summary { padding: 28px 20px; }
   .box { padding: 20px; }
+}
+@media (max-width: 420px) {
+  /* Swipe and the progress tabs handle navigation on small phones. */
+  .hero-arrows { display: none; }
+  .hero-tab { padding-top: 12px; padding-bottom: 6px; }
+  .slide-inner { padding-top: 88px; padding-bottom: 92px; }
+  .slide-pack img { height: 22vh; }
 }
